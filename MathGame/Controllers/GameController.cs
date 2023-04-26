@@ -1,4 +1,5 @@
-﻿using MathGame.Services;
+﻿using System.Diagnostics;
+using MathGame.Services;
 using MathGame.UserInput;
 
 namespace MathGame.Controllers;
@@ -77,6 +78,9 @@ public class GameController
 
     private void PlayGameRound(Operation operation)
     {
+        var timer = new Stopwatch();
+        timer.Start();
+
         int count = 0, score = 0;
 
         for (int i = 0; i < 10; i++)
@@ -105,13 +109,15 @@ public class GameController
                 Console.WriteLine($"The answer was {answer}");
             }
 
-            Console.WriteLine("Press Enter to continue: ");
-            Console.ReadLine();
             count++;
         }
 
-        Console.WriteLine($"Your total score was {score} out of {count}");
-        _gameHistory.Add($"Game - {operation} - Score: {score} out of {count}");
+        timer.Stop();
+
+        int time = (int)timer.Elapsed.TotalSeconds;
+
+        Console.WriteLine($"You scored {score} out of {count} in {time} seconds");
+        _gameHistory.Add($"Game - {operation} - Score: {score} out of {count} Duration - {time} seconds");
         Console.WriteLine("Press Enter to continue: ");
         Console.ReadLine();
     }
