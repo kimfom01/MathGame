@@ -5,10 +5,10 @@ namespace MathGame.Controllers;
 
 public class GameController
 {
-    private Input _input = new Input();
-    private Calculator _calculator = new Calculator();
+    private readonly Input _input = new Input();
+    private readonly Calculator _calculator = new Calculator();
 
-    List<string> _gameHistory = new();
+    readonly List<string> _gameHistory = new();
 
     private void Menu()
     {
@@ -85,14 +85,7 @@ public class GameController
             var numB = Random.Shared.Next(1, 10);
             if (operation == Operation.Division)
             {
-                numA = Random.Shared.Next(10, 100);
-                numB = Random.Shared.Next(1, 10);
-
-                while ((double)numA / numB != numA / numB)
-                {
-                    numA = Random.Shared.Next(10, 100);
-                    numB = Random.Shared.Next(1, 10);
-                }
+                numA *= numB;
             }
 
             var question = CreateQuestion(numA, numB, operation);
