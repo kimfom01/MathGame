@@ -4,7 +4,7 @@ namespace MathGame.UserInput;
 
 public class Input
 {
-    private InputValidation _validation = new();
+    private readonly InputValidation _validation = new();
 
     public int GetChoice()
     {
@@ -31,6 +31,6 @@ public class Input
             input = Console.ReadLine();
         }
 
-        return input;
+        return input!;
     }
 }
