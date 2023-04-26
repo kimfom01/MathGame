@@ -5,8 +5,8 @@ namespace MathGame.Controllers;
 
 public class GameController
 {
-    private readonly Input _input = new Input();
-    private readonly Calculator _calculator = new Calculator();
+    private readonly Input _input = new();
+    private readonly Calculator _calculator = new();
 
     readonly List<string> _gameHistory = new();
 
