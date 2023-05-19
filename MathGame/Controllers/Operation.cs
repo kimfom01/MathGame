@@ -2,7 +2,8 @@
 
 public enum Operation
 {
-    Addition = 1,
+    Exit,
+    Addition,
     Subtraction,
     Multiplication,
     Division,

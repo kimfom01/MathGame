@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using MathGame.Services;
 using MathGame.UserInput;
+using Spectre.Console;
 
 namespace MathGame.Controllers;
 
@@ -11,40 +12,46 @@ public class GameController
 
     readonly List<string> _gameHistory = new();
 
-    private void Menu()
+    private Operation Menu()
     {
         Console.Clear();
-        Console.WriteLine("0 to EndGame");
-        Console.WriteLine("1 to Play Addition Games");
-        Console.WriteLine("2 to Play Subtraction Games");
-        Console.WriteLine("3 to Play Multiplication Games");
-        Console.WriteLine("4 to Play Division Games");
-        Console.WriteLine("5 to View History");
-        Console.WriteLine("\nSelect your choice");
+
+        var option = AnsiConsole.Prompt(
+            new SelectionPrompt<Operation>()
+            .Title("Select your choice")
+            .AddChoices(Operation.Addition,
+                Operation.Subtraction,
+                Operation.Multiplication,
+                Operation.Division, 
+                Operation.History,
+                Operation.Exit));
+
+        return option;
     }
 
     public void Play()
     {
-        Menu();
-        var choice = _input.GetChoice();
+        var choice = Menu();
 
-        while (choice != 0)
+        while (true)
         {
             switch (choice)
             {
-                case (int)Operation.Addition:
+                case Operation.Exit:
+                    return;
+                case Operation.Addition:
                     PlayGameRound(Operation.Addition);
                     break;
-                case (int)Operation.Subtraction:
+                case Operation.Subtraction:
                     PlayGameRound(Operation.Subtraction);
                     break;
-                case (int)Operation.Multiplication:
+                case Operation.Multiplication:
                     PlayGameRound(Operation.Multiplication);
                     break;
-                case (int)Operation.Division:
+                case Operation.Division:
                     PlayGameRound(Operation.Division);
                     break;
-                case (int)Operation.History:
+                case Operation.History:
                     ViewHistory();
                     break;
                 default:
@@ -52,8 +59,7 @@ public class GameController
                     break;
             }
 
-            Menu();
-            choice = _input.GetChoice();
+            choice = Menu();
         }
     }
 
